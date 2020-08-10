@@ -29,6 +29,9 @@ void MainComponent::reload()
 {
     if (processor->plugin) {
         processor->plugin->setup();
+        
+        float desktopScale = openGLContext.getRenderingScale();
+        processor->plugin->setDesktopScale(desktopScale);
     }
 }
 
@@ -76,7 +79,7 @@ void MainComponent::render()
     OpenGLHelpers::clear(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
     
     if (processor->plugin) {
-        auto desktopScale = (float)openGLContext.getRenderingScale();
+        float desktopScale = openGLContext.getRenderingScale();
         processor->plugin->setWindowSize(roundToInt(desktopScale * getWidth()), roundToInt(desktopScale * getHeight()));
 
         float in[2] = { 0, 0 };
@@ -90,28 +93,28 @@ void MainComponent::render()
 void MainComponent::mouseDrag(const MouseEvent & event)
 {
     if (processor->plugin) {
-        auto desktopScale = (float)openGLContext.getRenderingScale();
+        float desktopScale = openGLContext.getRenderingScale();
         processor->plugin->mouseDragged(event.x * desktopScale, event.y * desktopScale, 0);
     }
 }
 
 void MainComponent::mouseMove(const MouseEvent& event) {
     if (processor->plugin) {
-        auto desktopScale = (float)openGLContext.getRenderingScale();
+        float desktopScale = openGLContext.getRenderingScale();
         processor->plugin->mouseMoved(event.x * desktopScale, event.y * desktopScale);
     }
 }
 
 void MainComponent::mouseDown(const MouseEvent& event) {
     if (processor->plugin) {
-        auto desktopScale = (float)openGLContext.getRenderingScale();
+        float desktopScale = openGLContext.getRenderingScale();
         processor->plugin->mousePressed(event.x * desktopScale, event.y * desktopScale, 0);
     }
 }
 
 void MainComponent::mouseUp(const MouseEvent& event) {
     if (processor->plugin) {
-        auto desktopScale = (float)openGLContext.getRenderingScale();
+        float desktopScale = openGLContext.getRenderingScale();
         processor->plugin->mouseReleased(event.x * desktopScale, event.y * desktopScale, 0);
     }
 }
