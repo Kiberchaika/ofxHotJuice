@@ -35,8 +35,6 @@ public:
 #if defined(JUCE_APP_VERSION)
 #else
 		ofBaseRenderer& renderer = *(window.renderer());
-
-		//renderer->setOrientation(ofOrientation::OF_ORIENTATION_DEFAULT, true);
 		if (window.getWidth() != w || window.getHeight() != h) {
 			window.setWindowShape(w, h);
 		}

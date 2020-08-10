@@ -99,7 +99,7 @@ public:
         ofLogVerbose() << "GL Version:" << glGetString(GL_VERSION);
 
 		while(glGetError() != GL_NO_ERROR) {
-		  // Process the error
+			// Process the error
 		}
 
 		
