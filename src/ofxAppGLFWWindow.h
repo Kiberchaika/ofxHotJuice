@@ -3,7 +3,6 @@
 #else
 #include "ofMain.h"
 #include "ofGLProgrammableRenderer.h"
-//#include "flextGL.h"
 #include "GLFW/glfw3.h"
 #endif
 

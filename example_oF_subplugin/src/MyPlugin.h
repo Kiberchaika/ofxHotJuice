@@ -39,7 +39,7 @@ class MyPlugin : public ofxPluginWithRender {
 	ofImage img2;
 
 	float a = 0;
-	float b_ = 0;
+	float b = 0;
 
 	bool isCloned = false;
 
@@ -203,7 +203,7 @@ public:
 		MyPlugin* plugin = (MyPlugin*)pluginBase;
 
 		a = plugin->a; 
-		b_ = plugin->b_;
+		b = plugin->b;
 		 
 		isCloned = true;
 		panes[0].position = plugin->panes[0].position;
