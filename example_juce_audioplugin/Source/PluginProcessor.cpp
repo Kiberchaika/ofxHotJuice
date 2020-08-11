@@ -50,13 +50,15 @@ Juceglvst_audioProcessor::Juceglvst_audioProcessor()
 #endif
     
     
+	isReloading = false;
+
     //plugin = nullptr;
 
 	hotreloader->addCallbackBeforeLoad(
 		[&]() -> void {
 		std::cout << "callback" << std::endl;
 
-		mutexForReload.lock();
+		isReloading = true;
 
 		plugin->setup();
 		needReinitRender = true;
@@ -67,7 +69,7 @@ Juceglvst_audioProcessor::Juceglvst_audioProcessor()
 		[&]() -> void {
 		std::cout << "callback" << std::endl;
 
-		mutexForReload.unlock();
+		isReloading = false;
 	}
 	);
 
@@ -220,7 +222,7 @@ void Juceglvst_audioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
         auto* channelData = buffer.getWritePointer (channel);
 
         // ..do something to the data...
-		if (plugin) {
+		if (!isReloading && plugin) {
 			plugin->process(nullptr, nullptr);
 		}
     }

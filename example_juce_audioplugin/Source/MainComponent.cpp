@@ -46,7 +46,7 @@ void MainComponent::shutdown()
 
 void MainComponent::render()
 {
-	if (processor->mutexForReload.try_lock()) {
+	if (!processor->isReloading) {
 		if (processor->plugin) {
 			if (processor->needReinitRender) {
 
@@ -75,8 +75,6 @@ void MainComponent::render()
 			float in[2] = { 0, 0 };
 			processor->plugin->draw(in);
 		}
-
-		processor->mutexForReload.unlock();
 	}
 }
 

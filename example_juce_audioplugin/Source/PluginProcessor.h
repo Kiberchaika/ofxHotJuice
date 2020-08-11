@@ -26,7 +26,7 @@ public:
 	hotjuice::Plugin* plugin;
 
 	bool needReinitRender;
-	std::mutex mutexForReload;
+	bool isReloading;
 
 public:
     //==============================================================================
