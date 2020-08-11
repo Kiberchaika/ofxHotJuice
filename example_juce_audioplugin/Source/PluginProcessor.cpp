@@ -60,8 +60,7 @@ Juceglvst_audioProcessor::Juceglvst_audioProcessor()
 
 		isReloading = true;
 
-		plugin->setup();
-		needReinitRender = true;
+		Sleep(100);
 	}
 	);
 
@@ -69,7 +68,11 @@ Juceglvst_audioProcessor::Juceglvst_audioProcessor()
 		[&]() -> void {
 		std::cout << "callback" << std::endl;
 
+		plugin->setup();
+
 		isReloading = false;
+
+		needReinitRender = true;
 	}
 	);
 
