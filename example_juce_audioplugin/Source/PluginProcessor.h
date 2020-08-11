@@ -14,22 +14,28 @@
 #include "PluginManager.h"
 #include "Plugin.h"
 
+#include <mutex>
+
 //==============================================================================
 /**
 */
-class Juceglvst_deleteAudioProcessor  : public AudioProcessor
+class Juceglvst_audioProcessor  : public AudioProcessor, public Timer 
 {
 public:
 	hotjuice::PluginManager* hotreloader;
 	hotjuice::Plugin* plugin;
 
-   
+	bool needReinitRender;
+	std::mutex mutexForReload;
+
 public:
     //==============================================================================
-    Juceglvst_deleteAudioProcessor();
-    ~Juceglvst_deleteAudioProcessor();
+    Juceglvst_audioProcessor();
+    ~Juceglvst_audioProcessor();
 
-    //==============================================================================
+	void timerCallback() override;
+
+	//==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
@@ -64,5 +70,5 @@ public:
 
 private:
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Juceglvst_deleteAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Juceglvst_audioProcessor)
 };

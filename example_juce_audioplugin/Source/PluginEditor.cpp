@@ -12,7 +12,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-Juceglvst_deleteAudioProcessorEditor::Juceglvst_deleteAudioProcessorEditor (Juceglvst_deleteAudioProcessor& p)
+Juceglvst_audioProcessorEditor::Juceglvst_audioProcessorEditor (Juceglvst_audioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
     // Make sure that before the constructor has finished, you've set the
@@ -28,14 +28,14 @@ Juceglvst_deleteAudioProcessorEditor::Juceglvst_deleteAudioProcessorEditor (Juce
    
 }
 
-Juceglvst_deleteAudioProcessorEditor::~Juceglvst_deleteAudioProcessorEditor()
+Juceglvst_audioProcessorEditor::~Juceglvst_audioProcessorEditor()
 {
     deleteAllChildren();
 }
 
 
 //==============================================================================
-void Juceglvst_deleteAudioProcessorEditor::paint (Graphics& g)
+void Juceglvst_audioProcessorEditor::paint (Graphics& g)
 {
     
     
@@ -49,7 +49,7 @@ void Juceglvst_deleteAudioProcessorEditor::paint (Graphics& g)
    // g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
 }
 
-void Juceglvst_deleteAudioProcessorEditor::resized()
+void Juceglvst_audioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..

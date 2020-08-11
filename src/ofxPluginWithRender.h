@@ -20,13 +20,13 @@ public:
 		_timeStart = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 	}
 
-	void setupRender(int glVersionMajor = 3, int glVersionMinor = 2) {
+	virtual void setupRenderer(void* in = nullptr, void* out = nullptr) override {
 #if defined(JUCE_APP_VERSION)
 #else
 		ofGLFWWindowSettings settings;
 		settings.setSize(1, 1);
-		settings.glVersionMajor = glVersionMajor;
-		settings.glVersionMinor = glVersionMinor;
+		settings.glVersionMajor = 3;
+		settings.glVersionMinor = 2;
 		window.setup(settings);
 #endif
 	}

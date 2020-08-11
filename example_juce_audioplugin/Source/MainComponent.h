@@ -66,9 +66,8 @@ enum ofKey {
 class MainComponent   : public OpenGLAppComponent, public KeyListener
 {
 public:
-    Juceglvst_deleteAudioProcessor* processor;
-    void reload();
-
+    Juceglvst_audioProcessor* processor;
+  
     float out;
 
 public:

@@ -17,11 +17,11 @@
 //==============================================================================
 /**
 */
-class Juceglvst_deleteAudioProcessorEditor  : public AudioProcessorEditor
+class Juceglvst_audioProcessorEditor  : public AudioProcessorEditor
 {
 public:
-    Juceglvst_deleteAudioProcessorEditor (Juceglvst_deleteAudioProcessor&);
-    ~Juceglvst_deleteAudioProcessorEditor();
+    Juceglvst_audioProcessorEditor (Juceglvst_audioProcessor&);
+    ~Juceglvst_audioProcessorEditor();
 
     //==============================================================================
     void paint (Graphics&) override;
@@ -30,9 +30,9 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    Juceglvst_deleteAudioProcessor& processor;
+    Juceglvst_audioProcessor& processor;
     
     MainComponent* mainComponent;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Juceglvst_deleteAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Juceglvst_audioProcessorEditor)
 };

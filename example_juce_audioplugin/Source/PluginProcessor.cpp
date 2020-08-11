@@ -11,8 +11,9 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+
 //==============================================================================
-Juceglvst_deleteAudioProcessor::Juceglvst_deleteAudioProcessor()
+Juceglvst_audioProcessor::Juceglvst_audioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -49,10 +50,38 @@ Juceglvst_deleteAudioProcessor::Juceglvst_deleteAudioProcessor()
 #endif
     
     
-    plugin = nullptr;
+    //plugin = nullptr;
+
+	hotreloader->addCallbackBeforeLoad(
+		[&]() -> void {
+		std::cout << "callback" << std::endl;
+
+		mutexForReload.lock();
+
+		plugin->setup();
+		needReinitRender = true;
+	}
+	);
+
+	hotreloader->addCallbackAfterLoad(
+		[&]() -> void {
+		std::cout << "callback" << std::endl;
+
+		mutexForReload.unlock();
+	}
+	);
+
+	plugin = hotreloader->createPluginObject("MyPlugin");
+
+	startTimer(1000);
 }
 
-Juceglvst_deleteAudioProcessor::~Juceglvst_deleteAudioProcessor()
+void Juceglvst_audioProcessor::timerCallback()
+{
+	hotreloader->tryToLoadIfUpdated();
+}
+
+Juceglvst_audioProcessor::~Juceglvst_audioProcessor()
 {
     if (plugin) {
         delete plugin;
@@ -67,12 +96,12 @@ Juceglvst_deleteAudioProcessor::~Juceglvst_deleteAudioProcessor()
 
 
 //==============================================================================
-const String Juceglvst_deleteAudioProcessor::getName() const
+const String Juceglvst_audioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool Juceglvst_deleteAudioProcessor::acceptsMidi() const
+bool Juceglvst_audioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -81,7 +110,7 @@ bool Juceglvst_deleteAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool Juceglvst_deleteAudioProcessor::producesMidi() const
+bool Juceglvst_audioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -90,7 +119,7 @@ bool Juceglvst_deleteAudioProcessor::producesMidi() const
    #endif
 }
 
-bool Juceglvst_deleteAudioProcessor::isMidiEffect() const
+bool Juceglvst_audioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -99,50 +128,50 @@ bool Juceglvst_deleteAudioProcessor::isMidiEffect() const
    #endif
 }
 
-double Juceglvst_deleteAudioProcessor::getTailLengthSeconds() const
+double Juceglvst_audioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int Juceglvst_deleteAudioProcessor::getNumPrograms()
+int Juceglvst_audioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int Juceglvst_deleteAudioProcessor::getCurrentProgram()
+int Juceglvst_audioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void Juceglvst_deleteAudioProcessor::setCurrentProgram (int index)
+void Juceglvst_audioProcessor::setCurrentProgram (int index)
 {
 }
 
-const String Juceglvst_deleteAudioProcessor::getProgramName (int index)
+const String Juceglvst_audioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void Juceglvst_deleteAudioProcessor::changeProgramName (int index, const String& newName)
+void Juceglvst_audioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
 //==============================================================================
-void Juceglvst_deleteAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void Juceglvst_audioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 }
 
-void Juceglvst_deleteAudioProcessor::releaseResources()
+void Juceglvst_audioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool Juceglvst_deleteAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool Juceglvst_audioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     ignoreUnused (layouts);
@@ -165,7 +194,7 @@ bool Juceglvst_deleteAudioProcessor::isBusesLayoutSupported (const BusesLayout& 
 }
 #endif
 
-void Juceglvst_deleteAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+void Juceglvst_audioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
@@ -199,25 +228,25 @@ void Juceglvst_deleteAudioProcessor::processBlock (AudioBuffer<float>& buffer, M
 }
 
 //==============================================================================
-bool Juceglvst_deleteAudioProcessor::hasEditor() const
+bool Juceglvst_audioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* Juceglvst_deleteAudioProcessor::createEditor()
+AudioProcessorEditor* Juceglvst_audioProcessor::createEditor()
 {
-    return new Juceglvst_deleteAudioProcessorEditor (*this);
+    return new Juceglvst_audioProcessorEditor (*this);
 }
 
 //==============================================================================
-void Juceglvst_deleteAudioProcessor::getStateInformation (MemoryBlock& destData)
+void Juceglvst_audioProcessor::getStateInformation (MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void Juceglvst_deleteAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void Juceglvst_audioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -227,5 +256,5 @@ void Juceglvst_deleteAudioProcessor::setStateInformation (const void* data, int 
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new Juceglvst_deleteAudioProcessor();
+    return new Juceglvst_audioProcessor();
 }

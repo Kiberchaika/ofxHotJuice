@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QvMuYT" name="example_juce_vstsample" projectType="audioplug"
+<JUCERPROJECT id="QvMuYT" name="example_juce_audioplugin" projectType="audioplug"
               jucerVersion="5.4.5" pluginFormats="buildVST3" pluginManufacturer="example_juce_audioplugin"
               headerPath="../../../libs/hotjuice/src">
-  <MAINGROUP id="YhGEjL" name="example_juce_vstsample">
+  <MAINGROUP id="YhGEjL" name="example_juce_audioplugin">
     <GROUP id="{5A51FE8A-D9F6-28EE-2A56-BD53B224D9ED}" name="Source">
       <FILE id="BMaSWk" name="Plugin.cpp" compile="1" resource="0" file="../libs/hotjuice/src/Plugin.cpp"/>
       <FILE id="ChmuiF" name="Plugin.h" compile="0" resource="0" file="../libs/hotjuice/src/Plugin.h"/>

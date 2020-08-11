@@ -23,16 +23,7 @@ MainComponent::MainComponent()
 	keyPressedCommand = false;
 	keyPressedCtrl = false;
 	keyPressedShift = false;
-}
-
-void MainComponent::reload()
-{
-    if (processor->plugin) {
-        processor->plugin->setup();
-        
-        float desktopScale = openGLContext.getRenderingScale();
-        processor->plugin->setDesktopScale(desktopScale);
-    }
+	
 }
 
 MainComponent::~MainComponent()
@@ -45,18 +36,8 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::initialise()
 {
-    processor->plugin = processor->hotreloader->createPluginObject("MyPlugin");
-    reload();
-    
-    processor->hotreloader->addCallbackAfterLoad(
-                                                 [&]() -> void {
-                                                     std::cout << "callback" << std::endl;
-                                                     reload();
-                                                 }
-                                                 );
+	processor->needReinitRender = true;
 }
-
-
 
 void MainComponent::shutdown()
 {
@@ -65,30 +46,38 @@ void MainComponent::shutdown()
 
 void MainComponent::render()
 {
-    processor->hotreloader->tryToLoadIfUpdated();
-    
-    if (processor->plugin) {
-        float in[2] = { 2, 3 };
-        processor->plugin->update(&in, &out);
-        
-        processor->plugin->custom("test");
-        processor->plugin->custom("test2");
-    }
-    
-    // This clears the context with a black background.
-    OpenGLHelpers::clear(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
-    
-    if (processor->plugin) {
-        float desktopScale = openGLContext.getRenderingScale();
-        processor->plugin->setWindowSize(roundToInt(desktopScale * getWidth()), roundToInt(desktopScale * getHeight()));
+	if (processor->mutexForReload.try_lock()) {
+		if (processor->needReinitRender && processor->plugin) {
+			processor->plugin->setupRenderer();
 
-        float in[2] = { 0, 0 };
-        processor->plugin->draw(in);
-    }
-    
+			float desktopScale = openGLContext.getRenderingScale();
+			processor->plugin->setDesktopScale(desktopScale);
+
+			processor->needReinitRender = false;
+		}
+
+		if (processor->plugin) {
+			float in[2] = { 2, 3 };
+			processor->plugin->update(&in, &out);
+
+			processor->plugin->custom("test");
+			processor->plugin->custom("test2");
+		}
+
+		// This clears the context with a black background.
+		OpenGLHelpers::clear(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
+
+		if (processor->plugin) {
+			float desktopScale = openGLContext.getRenderingScale();
+			processor->plugin->setWindowSize(roundToInt(desktopScale * getWidth()), roundToInt(desktopScale * getHeight()));
+
+			float in[2] = { 0, 0 };
+			processor->plugin->draw(in);
+		}
+
+		processor->mutexForReload.unlock();
+	}
 }
-
-
 
 void MainComponent::mouseDrag(const MouseEvent & event)
 {
