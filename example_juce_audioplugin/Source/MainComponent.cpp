@@ -47,16 +47,17 @@ void MainComponent::shutdown()
 void MainComponent::render()
 {
 	if (processor->mutexForReload.try_lock()) {
-		if (processor->needReinitRender && processor->plugin) {
-			processor->plugin->setupRenderer();
-
-			float desktopScale = openGLContext.getRenderingScale();
-			processor->plugin->setDesktopScale(desktopScale);
-
-			processor->needReinitRender = false;
-		}
-
 		if (processor->plugin) {
+			if (processor->needReinitRender) {
+
+				processor->plugin->setupRenderer();
+
+				float desktopScale = openGLContext.getRenderingScale();
+				processor->plugin->setDesktopScale(desktopScale);
+
+				processor->needReinitRender = false;
+			}
+
 			float in[2] = { 2, 3 };
 			processor->plugin->update(&in, &out);
 
