@@ -220,10 +220,9 @@ void Juceglvst_audioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
         auto* channelData = buffer.getWritePointer (channel);
 
         // ..do something to the data...
-        
-        if (plugin != NULL) {
-//            plugin->custom("test");
-        }
+		if (plugin) {
+			plugin->process(nullptr, nullptr);
+		}
     }
 }
 
