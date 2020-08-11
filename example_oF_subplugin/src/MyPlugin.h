@@ -119,7 +119,25 @@ public:
 		Pane::Parameters paneParameters;
 		paneParameters.firstPanelDraw = [&](MurkaContext& c) {
 
-			
+			drawWidget<Pane>(c, &(panes[1].position),
+				{ [&](MurkaContext& g) {
+
+				g.renderer->setColor(0, 90, 200);
+				g.renderer->drawRectangle(10, 10, g.getSize().x - 20, g.getSize().y - 20);
+				drawWidget<TestSurface>(g, {}, {0, 0, g.getSize().x, g.getSize().y});
+				},
+				[&](MurkaContext& g) {
+				g.renderer->setColor(90, 0, 110);
+
+				g.renderer->pushStyle();
+				g.renderer->disableFill();
+				g.renderer->drawRectangle(30, 30, g.getSize().x - 60, g.getSize().y - 60);
+				g.renderer->drawLine(0, 0, g.getSize().x, g.getSize().y);
+				g.renderer->popStyle();
+
+				drawWidget<TestSurface>(g, {}, {0, 0, g.getSize().x, g.getSize().y});
+				}, 
+				2 }, { 0, 0, c.getSize().x, c.getSize().y });
 		};
 		paneParameters.secondPanelDraw = [&](MurkaContext& c) {
 			c.renderer->setColor(50, 90, 50);
