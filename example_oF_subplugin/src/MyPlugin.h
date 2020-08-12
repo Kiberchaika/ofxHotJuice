@@ -62,14 +62,14 @@ public:
 
 		string userPath = hotjuice::Utils::getAppDataDirectory();
 
-
-		//  /*
 		m.setWindow((ofAppBaseWindow*)(&window));
 		m.setRenderer((ofBaseGLRenderer*)(window.renderer().get()));
-		m.setupFonts(userPath + "/com.company.application/Roboto-Regular.ttf", 12,
+		m.setupFonts(
+			userPath + "/com.company.application/Roboto-Regular.ttf", 12,
 			userPath + "/com.company.application/Roboto-Regular.ttf", 20,
 			userPath + "/com.company.application/Roboto-Regular.ttf", 12,
-			true);
+			true
+		);
 	}
 
 
