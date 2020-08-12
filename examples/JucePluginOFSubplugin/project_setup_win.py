@@ -2,7 +2,8 @@ from lxml import etree
 import os
 from project_settings import *
 
-tree = etree.parse(prj_file + '.vcxproj')
+path_to_project = os.path.join(project_name, project_name + '.vcxproj')
+tree = etree.parse(path_to_project)
 
 namespaces = {'ns':'http://schemas.microsoft.com/developer/msbuild/2003'}
 
@@ -35,4 +36,4 @@ for el in tree.xpath('//ns:PostBuildEvent', namespaces=namespaces):
     '</Command>'))
 
 #tree.write('example_oF_subplugin.vcxproj')
-tree.write(prj_file + '.vcxproj')
+tree.write(path_to_project)
