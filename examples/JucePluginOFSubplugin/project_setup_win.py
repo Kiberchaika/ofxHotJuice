@@ -30,7 +30,7 @@ path_to_plugin = os.path.join(os.environ.get("APPDATA"), company_name, bundle_id
 for el in tree.xpath('//ns:PostBuildEvent', namespaces=namespaces):
     el.append(etree.XML('<Command>' +
     'mkdir ' + '"' + path_to_plugin + '" ' +
-    ' &amp; ' + 'robocopy "' + path_resources + '" "' + path_to_plugin + '/resources/" /E '  +
+    ' &amp; ' + 'robocopy "' + path_resources_win + '" "' + path_to_plugin + '/resources/" /E '  +
     ' &amp; ' + 'robocopy "$(ProjectDir)bin/" "' + path_to_plugin + '/" "*.dll" "*.pdb" /is '  +
     ' &amp; ' + 'exit 0' +
     '</Command>'))
