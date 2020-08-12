@@ -1,12 +1,6 @@
 #include "ofMain.h"
-#include "PluginBase.h"
-#include "Utils.h"
 
-/*
- need to define (set "Preprocessor Macros" for xcode)
- MURKA_OF
- MURKA_OFFSCREEN
-*/
+#include "ofxHotJuice.h"
 
 #include "ofxMurka.h"
 #include "TestSurface.h"
