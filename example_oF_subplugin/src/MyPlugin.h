@@ -54,14 +54,14 @@ public:
 	void setupRenderer(void* in, void* out) override {
 		ofxPluginWithRender::setupRenderer();
 
-		string userPath = hotjuice::Utils::getAppDataDirectory();
+		std::string resourcesPath = hotjuice::Utils::getAppDataDirectory() + "/MyCompany/com.company.application/resources/";
 
 		m.setWindow((ofAppBaseWindow*)(&window));
 		m.setRenderer((ofBaseGLRenderer*)(window.renderer().get()));
 		m.setupFonts(
-			userPath + "/com.company.application/Roboto-Regular.ttf", 12,
-			userPath + "/com.company.application/Roboto-Regular.ttf", 20,
-			userPath + "/com.company.application/Roboto-Regular.ttf", 12,
+			resourcesPath + "Roboto-Regular.ttf", 12,
+			resourcesPath + "Roboto-Regular.ttf", 20,
+			resourcesPath + "Roboto-Regular.ttf", 12,
 			true
 		);
 	}
