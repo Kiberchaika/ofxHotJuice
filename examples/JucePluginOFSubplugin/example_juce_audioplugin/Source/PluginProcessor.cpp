@@ -11,6 +11,8 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+#include <chrono>
+#include <thread>
 
 //==============================================================================
 Juceglvst_audioProcessor::Juceglvst_audioProcessor()
@@ -57,7 +59,7 @@ Juceglvst_audioProcessor::Juceglvst_audioProcessor()
 
 		isReloading = true;
 
-		Sleep(100);
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	}
 	);
 
