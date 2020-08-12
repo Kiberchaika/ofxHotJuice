@@ -72,7 +72,7 @@ Juceglvst_audioProcessor::Juceglvst_audioProcessor()
 
 		isReloading = false;
 
-		needReinitRender = true;
+		needToReinitRender = true;
 	}
 	);
 

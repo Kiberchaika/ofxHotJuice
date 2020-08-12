@@ -25,7 +25,7 @@ public:
 	hotjuice::PluginManager* hotreloader;
 	hotjuice::Plugin* plugin;
 
-	bool needReinitRender;
+	bool needToReinitRender;
 	bool isReloading;
 
 public:
