@@ -1,3 +1,0 @@
-ofxMurka
-ofxFontStash3
-ofxHotJuice
