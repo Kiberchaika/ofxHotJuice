@@ -31,19 +31,17 @@ Juceglvst_audioProcessor::Juceglvst_audioProcessor()
     // Initialise GL objects for rendering here.
     hotreloader = new hotjuice::PluginManager();
     
-    
-    // Path to the plugin we will load
-	std::string pluginPath = "MyCompany/com.company.application";
-
 	// The library file that we load here should be called like this:
 	std::string pluginFilename = "example_oF_subplugin"; // omit the .dylib or .dll and "lib" in the beginning
 
 #if defined (_WIN32)
-    std::string pluginEnclosingFolder = juce::File::getSpecialLocation(juce::File::SpecialLocationType::userApplicationDataDirectory).getChildFile(pluginPath).getFullPathName().toStdString();
+	std::string pluginPath = "MyCompany/Hotjuice oF and JUCE example";
+	std::string pluginEnclosingFolder = juce::File::getSpecialLocation(juce::File::SpecialLocationType::userApplicationDataDirectory).getChildFile(pluginPath).getFullPathName().toStdString();
 	hotreloader->setAdditionalFilesToCopy({ "fmodex64.dll","fmodexL64.dll" });
 	hotreloader->setupWithHotReloading(pluginEnclosingFolder, pluginFilename, pluginEnclosingFolder + "/tempPlugins");
 #elif defined (__APPLE__)
-    std::string pluginEnclosingFolder = juce::File::getSpecialLocation(juce::File::SpecialLocationType::userApplicationDataDirectory).getChildFile("Application Support").getChildFile(pluginPath).getFullPathName().toStdString();
+	std::string pluginPath = "MyCompany/com.company.application";
+	std::string pluginEnclosingFolder = juce::File::getSpecialLocation(juce::File::SpecialLocationType::userApplicationDataDirectory).getChildFile("Application Support").getChildFile(pluginPath).getFullPathName().toStdString();
 	hotreloader->setAdditionalFilesToCopy({ "libfmodex.dylib" });
 	hotreloader->setupWithHotReloading(pluginEnclosingFolder, pluginFilename, pluginEnclosingFolder + "/tempPlugins");
 #endif
