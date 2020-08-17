@@ -30,6 +30,16 @@ public:
 		window.setup(settings);
 #endif
 	}
+    
+    float getDesktopScale() {
+        return desktopScale_;
+    }
+    
+    float desktopScale_;
+    
+    void setDesktopScale(float desktopScale) override {
+        desktopScale_ = desktopScale;
+    }
 
 	void setWindowSize(int w, int h) override {
 #if defined(JUCE_APP_VERSION)
