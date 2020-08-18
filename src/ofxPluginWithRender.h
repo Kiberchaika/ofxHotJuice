@@ -80,7 +80,7 @@ public:
 			renderer.popMatrix();
 
 			renderer.popMatrix();
-			renderer.popMatrix();
+			renderer.popStyle();
 #endif
 		}
 	}
