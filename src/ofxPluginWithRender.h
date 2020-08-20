@@ -52,6 +52,13 @@ public:
 #endif
 	}
 
+	void showCursor() {
+		callback("showCursor", nullptr, nullptr);
+	}
+
+	void hideCursor() {
+		callback("hideCursor", nullptr, nullptr);
+	}
 
 	long getTimeStart() {
 		return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() - _timeStart;
