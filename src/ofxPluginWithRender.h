@@ -60,6 +60,11 @@ public:
 		callback("hideCursor", nullptr, nullptr);
 	}
 
+	void setCursorPosition(int x, int y) {
+		int pos[2] = { x,y };
+		callback("setCursorPosition", &pos, nullptr);
+	}
+
 	long getTimeStart() {
 		return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() - _timeStart;
 	}
