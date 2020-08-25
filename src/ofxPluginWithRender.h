@@ -1,11 +1,11 @@
-#include "PluginBase.h"
+#include "BasePlugin.h"
 
 #if defined(JUCE_APP_VERSION)
 #else
 #include "ofxAppGLFWWindow.h"
 #endif
 
-class ofxPluginWithRender : public hotjuice::PluginBase {
+class ofxPluginWithRender : public hotjuice::BasePlugin {
 protected:
 #if defined(JUCE_APP_VERSION)
 #else
@@ -49,13 +49,13 @@ public:
 			window.setWindowShape(w, h);
 		}
 		renderer.setupScreenOrtho(w, h);
-#endif
+#endif  
 	}
 
 	void showCursor() {
 		callback("showCursor", nullptr, nullptr);
-	}
-
+	} 
+	 
 	void hideCursor() {
 		callback("hideCursor", nullptr, nullptr);
 	}
