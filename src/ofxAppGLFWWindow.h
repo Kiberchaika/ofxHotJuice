@@ -23,12 +23,12 @@ public:
     }
     
     void setup(const ofGLFWWindowSettings & settings) {
-        
+        /*
         if(!glfwInit( )){
             ofLogError("ofAppGLFWWindow") << "couldn't init GLFW";
             //return;
         }
-        
+        */
 		/*
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_RED_BITS, settings.redBits);

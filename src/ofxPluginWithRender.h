@@ -10,6 +10,7 @@ protected:
 #if defined(JUCE_APP_VERSION)
 #else
 	ofxAppGLFWWindow window;
+	ofBaseRenderer* renderer;
 #endif
 	std::string _log;
 	long long _timeStart;
@@ -18,6 +19,8 @@ public:
 	ofxPluginWithRender() {
 		_log = "";
 		_timeStart = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+		renderer = nullptr;
 	}
 
 	virtual void setupRenderer(void* in = nullptr, void* out = nullptr) override {
@@ -28,6 +31,8 @@ public:
 		settings.glVersionMajor = 3;
 		settings.glVersionMinor = 2;
 		window.setup(settings);
+
+		renderer = (ofBaseGLRenderer*)(window.renderer().get());
 #endif
 	}
     
