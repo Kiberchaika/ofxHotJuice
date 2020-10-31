@@ -49,12 +49,13 @@ public:
 	void setWindowSize(int w, int h) override {
 #if defined(JUCE_APP_VERSION)
 #else
-		ofBaseRenderer& renderer = *(window.renderer());
 		if (window.getWidth() != w || window.getHeight() != h) {
 			window.setWindowShape(w, h);
 		}
-		renderer.setupScreenOrtho(w, h);
-#endif  
+        if(renderer) {
+            renderer->setupScreenOrtho(w, h);
+        }
+#endif
 	}
 
 	void showCursor() {
@@ -79,25 +80,26 @@ public:
 		{
 #if defined(JUCE_APP_VERSION)
 #else
-			ofBaseRenderer& renderer = *(window.renderer());
-			renderer.pushStyle();
-			renderer.pushMatrix();
+            if(renderer) {
+                renderer->pushStyle();
+                renderer->pushMatrix();
 
-			float prc = float(getTimeStart() % timeFromStart) / timeFromStart;
-			float size = 60;
+                float prc = float(getTimeStart() % timeFromStart) / timeFromStart;
+                float size = 60;
 
-			renderer.translate(window.getWidth() / 2, window.getHeight() / 2);
-			renderer.setColor(0, 0, 0, 255 * (1.0 - prc));
-			renderer.drawCircle(0, 0, 0, size / 2);
-			renderer.pushMatrix(); 
-			renderer.rotateDeg(2 * 360 * prc);
-			renderer.translate(-size / 20 / 2, -size / 2);
-			renderer.setColor(255, 255, 255, 255 * (1.0 - prc));
-			renderer.drawRectangle(0, 0, 0, size / 20, size / 2);
-			renderer.popMatrix();
+                renderer->translate(window.getWidth() / 2, window.getHeight() / 2);
+                renderer->setColor(0, 0, 0, 255 * (1.0 - prc));
+                renderer->drawCircle(0, 0, 0, size / 2);
+                renderer->pushMatrix();
+                renderer->rotateDeg(2 * 360 * prc);
+                renderer->translate(-size / 20 / 2, -size / 2);
+                renderer->setColor(255, 255, 255, 255 * (1.0 - prc));
+                renderer->drawRectangle(0, 0, 0, size / 20, size / 2);
+                renderer->popMatrix();
 
-			renderer.popMatrix();
-			renderer.popStyle();
+                renderer->popMatrix();
+                renderer->popStyle();
+            }
 #endif
 		}
 	}
@@ -105,8 +107,9 @@ public:
 	void drawLog(int maxLines = 40) {
 #if defined(JUCE_APP_VERSION)
 #else
-		ofBaseRenderer& renderer = *(window.renderer());
-		renderer.drawString(_log, 20, 20, 0);
+        if(renderer) {
+            renderer->drawString(_log, 20, 20, 0);
+        }
 #endif
 		if (std::count(_log.begin(), _log.end(), '\n') > maxLines) {
 			_log = "";
