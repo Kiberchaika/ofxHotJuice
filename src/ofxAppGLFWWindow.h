@@ -82,17 +82,20 @@ public:
         }
         */
 
-		setWindowShape(800, 600);
+		setWindowShape(1, 1);
 		//setWindowPosition(0, 0);
 
 #ifndef TARGET_OPENGLES
-		glewExperimental = GL_TRUE;
-		GLenum err = glewInit();
-		if (GLEW_OK != err)
-		{
-			/* Problem: glewInit failed, something is seriously wrong. */
-			ofLogError("ofAppRunner") << "couldn't init GLEW: " << glewGetErrorString(err);
-		}
+        static bool inited = false;
+        if(!inited){
+            glewExperimental = GL_TRUE;
+            GLenum err = glewInit();
+            if (GLEW_OK != err)
+            {
+                ofLogError("ofxAppGLFWWindow") << "couldn't init GLEW: " << glewGetErrorString(err);
+            }
+            inited = true;
+        }
 #endif
         
         ofLogVerbose() << "GL Version:" << glGetString(GL_VERSION);
