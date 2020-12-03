@@ -12,8 +12,10 @@ protected:
 	ofxAppGLFWWindow window;
 	ofBaseRenderer* renderer;
 #endif
+private:
 	std::string _log;
 	long long _timeStart;
+    float desktopScale_;
 
 public:
 	ofxPluginWithRender() {
@@ -21,6 +23,7 @@ public:
 		_timeStart = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
 		renderer = nullptr;
+        desktopScale_ = 1.0;
 	}
 
 	virtual void setupRenderer(void* in = nullptr, void* out = nullptr) override {
@@ -34,13 +37,17 @@ public:
 
 		renderer = (ofBaseGLRenderer*)(window.renderer().get());
 #endif
-	}
+	} 
+ 
+    virtual void closeRenderer(void* in = nullptr, void* out = nullptr) override {
+        renderer = nullptr;
+
+        window.close();
+    }
     
     float getDesktopScale() {
         return desktopScale_;
     }
-    
-    float desktopScale_;
     
     void setDesktopScale(float desktopScale) override {
         desktopScale_ = desktopScale;
